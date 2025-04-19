@@ -41,81 +41,43 @@ const addStudent = asyncHandler(async (req, res) => {
     .json(new ApiResponse(201, { student_id: req.body.student_id }, "Student added successfully"));
 });
 
-// Api to get users
-const getUsers = asyncHandler(async (req, res) => {
+// Api to get students
+const getStudents = asyncHandler(async (req, res) => {
   const request = getSqlRequest();
 
-  const query = `SELECT * FROM tb_gl_forms_users
-              WHERE company_id = @company_id`;
-    request.input("company_id", sql.NVarChar, req.user.company_id);
+  const query = `SELECT * FROM tb_student`;
 
   const result = await request.query(query);
 
   if (result.recordset.length === 0) {
-    throw new ApiError(404, "No Users found");
+    throw new ApiError(404, "No Students found");
   }
 
-  return res.status(200).json(new ApiResponse(200, { Users: result.recordset }, "Users fetched successfully"));
+  return res.status(200).json(new ApiResponse(200, { Students: result.recordset }, "Students fetched successfully"));
 });
 
-// Api to get User by id
-const getUserById = asyncHandler(async (req, res) => {
-  const { user_id } = req.params;
+// Api to get student by id
+const getStudentById = asyncHandler(async (req, res) => {
+  const { student_id } = req.params;
 
-  if (!user_id) {
-    throw new ApiError(400, "Please provide User Id");
+  if (!student_id) {
+    throw new ApiError(400, "Please provide Student Id");
   }
 
   const request = getSqlRequest();
 
-  request.input("user_id", sql.NVarChar, user_id);
+  request.input("student_id", sql.NVarChar, student_id);
 
-  const query = "SELECT * FROM tb_gl_forms_users WHERE user_id = @user_id";
+  const query = "SELECT * FROM tb_student WHERE student_id = @student_id";
   const result = await request.query(query);
 
   if (result.recordset.length === 0) {
-    throw new ApiError(404, "No User found");
+    throw new ApiError(404, "No student found");
   }
 
-  const user = result.recordset[0];
+  const student = result.recordset[0];
 
-  if( req.user.role === "admin" && user.company_id !== req.user.company_id){
-    throw new ApiError(403, "Access Denied");
-  }
-
-  return res.status(200).json(new ApiResponse(200, { User: user }, "User fetched successfully"));
+  return res.status(200).json(new ApiResponse(200, { Student: student }, "Student fetched successfully"));
 });
 
-// Api to delete User
-const deleteUser = asyncHandler(async (req, res) => {
-  const { user_id } = req.params;
-
-  if (!user_id) {
-    throw new ApiError(400, "Please provide User Id");
-  }
-
-  const request = getSqlRequest();
-
-  request.input("user_id", sql.NVarChar, user_id);
-  const checkQuery = "SELECT * FROM tb_gl_forms_users WHERE user_id = @user_id";
-  const checkResult = await request.query(checkQuery);
-
-  if (checkResult.recordset.length === 0) {
-    throw new ApiError(404, "No User found");
-  }
-
-  const user = checkResult.recordset[0];
-
-  if (req.user.role === "admin" && user.company_id !== req.user.company_id) {
-    throw new ApiError(403, "Access denied");
-  }
-
-  const deleteQuery = "DELETE FROM tb_gl_forms_users WHERE user_id = @user_id";
-  const result = await request.query(deleteQuery);
-
-  return res
-    .status(200)
-    .json(new ApiResponse(200, {}, "User deleted successfully"));
-});
-
-export { addStudent, getUsers, getUserById, deleteUser};
+export { addStudent, getStudents, getStudentById };
