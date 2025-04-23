@@ -143,13 +143,9 @@ const qrGenrate = asyncHandler(async (req, res) => {
   });
 
 
-  console.log(qrCodeImage);
   
 
-
-  
-
-  // // Send email with event details and token
+  // Send email with event details and token
   await sendEmailForUserCreation(
     student_email,
     student_name,
