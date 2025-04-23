@@ -132,12 +132,12 @@ const qrGenrate = asyncHandler(async (req, res) => {
   };
 
   // Generate token
-  const token = jwt.sign(payload, process.env.SECRET_KEY, { expiresIn: "1h" });
+  const token = jwt.sign(payload, process.env.SECRET_KEY);
 
   // Create QR code from URL that includes token
-  const qrUrl = `http://localhost:3000/event-pass/${token}`; // your frontend link
+  // const qrUrl = `http://localhost:3000/event-pass/${token}`; // your frontend link
   // const qrCodeImage = await QRCode.toDataURL(qrUrl);
-  const qrCodeImage = await QRCode.toDataURL(qrUrl, {
+  const qrCodeImage = await QRCode.toDataURL(token, {
     width: 200,
     errorCorrectionLevel: 'H'
   });
@@ -157,7 +157,6 @@ const qrGenrate = asyncHandler(async (req, res) => {
     event_description,
     event_venue,
     event_time,
-    token,
     qrCodeImage
   );
 

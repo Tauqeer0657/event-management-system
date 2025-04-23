@@ -8,12 +8,20 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-async function sendEmail(email, subject, html) {
+async function sendEmail(email, subject, html, qrImage) {
   const mailOptions = {
     from: "miteshpradhan97@gmail.com",
     to: email,
     subject: subject,
     html: html,
+    attachments: [
+      {
+        filename: 'qrcode.png',
+        content: qrImage.split("base64,")[1], // ensure qrImage is passed
+        encoding: 'base64',
+        cid: 'qrcode_cid'
+      }
+    ]
   };
 
   try {
@@ -25,7 +33,6 @@ async function sendEmail(email, subject, html) {
     throw error;
   }
 }
-
 
 function sendEmailForUserCreation(
     email,
@@ -57,7 +64,7 @@ function sendEmailForUserCreation(
           <li><strong>Date & Time:</strong> ${formattedDate}</li>
         </ul>
         <p>Scan the QR code below to access your event pass:</p>
-       <img src="${qrImage}" alt="QR Code" style="width:200px; height:auto;" />
+       <img src="cid:qrcode_cid" alt="QR Code" style="width:200px; height:auto;" />
 
         <p>If you can't scan the QR code, open this link: 
           <a href="${process.env.FRONTEND_URL || 'http://localhost:3000'}/event-pass" target="_blank">
@@ -69,7 +76,7 @@ function sendEmailForUserCreation(
       </div>
     `;
   
-    return sendEmail(email, subject, html);
+    return sendEmail(email, subject, html, qrImage);
   }
 
 export {sendEmailForUserCreation} ;
