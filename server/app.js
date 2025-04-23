@@ -4,6 +4,7 @@ import xssClean from "xss-clean";
 import helmet from "helmet";
 import cookieParser from "cookie-parser";
 import { router as studentRouter } from "./routers/studentRoutes.js";
+import { router as qrGenrateRouter } from "./routers/qrGenrateRoute.js";
 
 const app = express();
 
@@ -23,5 +24,8 @@ app.use(xssClean());
 
 // Routes
 app.use("/api/v1/student", studentRouter);
+
+app.use("/api/v1/qr", qrGenrateRouter);
+
 
 export { app };
