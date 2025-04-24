@@ -10,6 +10,8 @@ import {
 } from "react-bootstrap";
 import SideBar from "../../component/SideBar";
 import axios from "axios";
+import QrReader from 'react-qr-reader';
+import jwt_decode from 'jwt-decode';
 
 const EventManage = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
@@ -24,7 +26,7 @@ const EventManage = () => {
   });
 
 
-console.log(formData);
+
 
   
   const [loading, setLoading] = useState(true);
@@ -86,6 +88,9 @@ console.log(formData);
       alert("An error occurred while generating the QR Code.");
     }
   };
+
+
+  
 
   return (
     <Container
@@ -199,6 +204,12 @@ console.log(formData);
             </>
           )}
         </div>
+      </div>
+
+
+
+      <div>
+
       </div>
     </Container>
   );
