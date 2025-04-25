@@ -1,14 +1,13 @@
-// Header.js
 import React from "react";
 import { styled } from "@mui/material/styles";
 import MuiAppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
-// import Typography from '@mui/material/Typography';
-// import { Container } from '@mui/material';
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
+import { Avatar, Button } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
-// Define the drawer width
+// Drawer width constant
 const drawerWidth = 200;
 
 const AppBar = styled(MuiAppBar, {
@@ -30,11 +29,18 @@ const AppBar = styled(MuiAppBar, {
 }));
 
 export default function Header({ open, handleDrawerOpen }) {
+  const navigate = useNavigate();
+  const user = JSON.parse(localStorage.getItem("user"));
+
+  const handleLogout = () => {
+    localStorage.removeItem("user");
+    navigate("/");
+  };
+
   return (
     <AppBar position="fixed" open={open} style={{ background: "#222b48" }}>
-      <Toolbar
-        style={{ justifyContent: "space-between", alignItems: "center" }}
-      >
+      <Toolbar style={{ justifyContent: "space-between", alignItems: "center" }}>
+        {/* Left side: Drawer toggle */}
         <div>
           <IconButton
             color="inherit"
@@ -49,14 +55,24 @@ export default function Header({ open, handleDrawerOpen }) {
             <MenuIcon />
           </IconButton>
         </div>
-        <div
-          style={{
-            height: "40px",
-            width: "40px",
-            background: "white",
-            borderRadius: "50%",
-          }}
-        ></div>
+
+        {/* Right side: User avatar, name, and logout */}
+        {user && (
+          <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+            <Avatar sx={{ bgcolor: "#f44336" }}>
+              {user.name?.charAt(0).toUpperCase()}
+            </Avatar>
+            <span style={{ color: "#fff", fontWeight: "500" }}>{user.name}</span>
+            <Button
+              variant="outlined"
+              size="small"
+              sx={{ color: "#fff", borderColor: "#fff" }}
+              onClick={handleLogout}
+            >
+              Logout
+            </Button>
+          </div>
+        )}
       </Toolbar>
     </AppBar>
   );

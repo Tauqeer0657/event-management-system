@@ -16,7 +16,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import axios from "axios";
+
 import { Link } from "react-router-dom";
 import Header2 from "../../component/Header2";
 
@@ -28,14 +28,20 @@ const customTheme = createTheme({
   },
 });
 
+const dummyCredentials = {
+  email: "demo@gmail.com",
+  password: "demo",
+  name:"Demo User"
+};
+
 export default function Login() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
-    USER_CD: "",
-    PASS_CD: "",
+    email: "",
+    password: "",
   });
 
   const handleInputChange = (e) => {
@@ -43,46 +49,44 @@ export default function Login() {
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
 
-    try {
-      setLoading(true);
-      const response = await axios.post(
-        "api/login",
-        {
-          USER_CD: formData.USER_CD,
-          PASS_CD: formData.PASS_CD,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-          withCredentials: true,
-        }
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setError("");
+  
+    // Simulate login delay
+    setTimeout(() => {
+      if (
+        formData.email === dummyCredentials.email &&
+        formData.password === dummyCredentials.password
+      ) {
+
+
+         // Save user data to localStorage
+      localStorage.setItem(
+        "user",
+        JSON.stringify({
+          email: dummyCredentials.email,
+          name: dummyCredentials.name,
+        })
       );
 
-      if (response.status === 200) {
-        const token = response.headers["x-gl-auth-token"];
-        const userDetails = response.data[0];
-        console.log(userDetails)
-        if (token && userDetails) {
-          sessionStorage.setItem("authToken", token);
-          sessionStorage.setItem("userDetails", JSON.stringify(userDetails)); 
-          navigate("/dashboard");
-        } else {
-          setError("Failed to retrieve token");
-        }
+
+
+
+
+
+        // Navigate to dashboard or home
+        navigate("/qrgenrate"); // Change this to your actual route
       } else {
-        setError("Invalid Employee ID or Password");
+        setError("Invalid email or password");
       }
-    } catch (error) {
-      setError("An error occurred while logging in");
-      console.error(error);
-    } finally {
       setLoading(false);
-    }
+    }, 1000);
   };
+  
 
 
 
@@ -133,11 +137,11 @@ export default function Login() {
                     margin="normal"
                     required
                     fullWidth
-                    id="USER_CD"
+                    id="email"
                     label="Email"
-                    name="USER_CD"
+                    name="email"
                     autoComplete="email"
-                    value={formData.USER_CD}
+                    value={formData.email}
                     onChange={handleInputChange}
                     autoFocus
                   />
@@ -145,12 +149,12 @@ export default function Login() {
                     margin="normal"
                     required
                     fullWidth
-                    name="PASS_CD"
+                    name="password"
                     label="Password"
                     type="password"
-                    id="PASS_CD"
+                    id="password"
                     autoComplete="current-password"
-                    value={formData.PASS_CD}
+                    value={formData.password}
                     onChange={handleInputChange}
                   />
                   <FormControlLabel
