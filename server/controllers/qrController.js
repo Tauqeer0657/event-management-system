@@ -72,7 +72,6 @@ const generateQr = asyncHandler(async (req, res) => {
   // Convert base64 Data URL to buffer
   const base64Data = qrCodeDataURL.split(';base64,').pop();
   const buffer = Buffer.from(base64Data, 'base64');
-  console.log(buffer);
 
   // Upload buffer to Cloudinary
   const cloudinaryResponse = await cloudinary.uploader.upload_stream(
