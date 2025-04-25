@@ -5,7 +5,7 @@ import helmet from "helmet";
 import cookieParser from "cookie-parser";
 import { router as studentRouter } from "./routers/studentRoutes.js";
 import { router as eventRouter } from "./routers/eventRoutes.js";
-import { router as qrGenrateRouter } from "./routers/qrGenrateRoute.js";
+import { router as qrRouter } from "./routers/qrRoutes.js";
 
 const app = express();
 
@@ -26,8 +26,7 @@ app.use(xssClean());
 // Routes
 app.use("/api/v1/student", studentRouter);
 app.use("/api/v1/event", eventRouter);
-
-app.use("/api/v1/qr", qrGenrateRouter);
+app.use("/api/v1/qr", qrRouter);
 
 
 export { app };

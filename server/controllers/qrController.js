@@ -4,10 +4,10 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { getSqlRequest, sql } from "../db/connection.js";
 import jwt from 'jsonwebtoken';
-import { sendEmailForUserCreation } from "../utils/emailServices.js";
+import { sendEmailWithQrCode } from "../utils/emailServices.js";
 import QRCode from "qrcode";
 
-const qrGenrate = asyncHandler(async (req, res) => {
+const generateQr = asyncHandler(async (req, res) => {
   const { student_id, event_id } = req.body;
 
   if (!student_id || !event_id) {
@@ -68,7 +68,6 @@ const qrGenrate = asyncHandler(async (req, res) => {
     width: 500,
     errorCorrectionLevel: 'L'
   });
-  console.log(qrCodeDataURL);
 
   // Convert base64 Data URL to buffer
   const base64Data = qrCodeDataURL.split(';base64,').pop();
@@ -86,18 +85,18 @@ const qrGenrate = asyncHandler(async (req, res) => {
       if (error) throw new ApiError(500, "Cloudinary upload failed");
 
       // Send email with QR code Cloudinary URL
-      await sendEmailForUserCreation(
+      await sendEmailWithQrCode(
         student_email,
         student_name,
         event_name,
         event_description,
         event_venue,
         event_time,
-        result.secure_url // Use cloudinary image URL in email
+        result.secure_url 
       );
 
       return res.status(200).json(
-        new ApiResponse(200, { ...payload, token, qr_image_url: result.secure_url }, "QR code generated and sent via email")
+        new ApiResponse(200, { token, qr_image_url: result.secure_url }, "QR code generated and sent via email")
       );
     }
   );
@@ -107,4 +106,4 @@ const qrGenrate = asyncHandler(async (req, res) => {
   stream.end(buffer);
 });
 
-export { qrGenrate };
+export { generateQr };

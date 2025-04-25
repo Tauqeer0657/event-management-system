@@ -13,8 +13,8 @@ function App() {
       <Routes>
         <Route path="/" element={<Login />} />
     
-        <Route path="/qrgenrate" element={<EventManage />}></Route>
-        <Route path="/qrshow" element={<QRScanner />}></Route>
+        <Route path="/qrGenerate" element={<EventManage />}></Route>
+        <Route path="/qrShow" element={<QRScanner />}></Route>
 
   
       </Routes>
