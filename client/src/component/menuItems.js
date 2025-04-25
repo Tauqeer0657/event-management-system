@@ -7,13 +7,9 @@ import ApartmentIcon from "@mui/icons-material/Apartment";
 
 
 export const menuItems = [
+ 
   {
-    text: "DASHBOARD",
-    icon: <DashboardIcon sx={{ fontSize: "20px" }} />,
-    path: "/dashboard",
-  },
-  {
-    text: "MASTER",
+    text: "Menu",
     icon: <LayersIcon sx={{ fontSize: "20px" }} />, 
     path: "",
     submenu: [
