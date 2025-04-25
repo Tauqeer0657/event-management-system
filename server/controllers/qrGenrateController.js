@@ -1,5 +1,3 @@
-
-
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
@@ -69,17 +67,12 @@ const qrGenrate = asyncHandler(async (req, res) => {
   // Generate token
   const token = jwt.sign(payload, process.env.SECRET_KEY);
 
-  // Create QR code from URL that includes token
-  
   const qrCodeImage = await QRCode.toDataURL(token, {
-    width: 200,
-    errorCorrectionLevel: 'H'
+    width: 500,
+    errorCorrectionLevel: 'L'
   });
 
-
-
-
-  // Send email with event details and token
+ // Send email with event details and token
   await sendEmailForUserCreation(
     student_email,
     student_name,
@@ -91,27 +84,8 @@ const qrGenrate = asyncHandler(async (req, res) => {
   );
 
   return res.status(200).json(
-    new ApiResponse(200, { ...payload, token }, "QR code data prepared and email sent")
+    new ApiResponse(200, { ...payload, token }, "QR code generated and sent on an email")
   );
 });
 
 export { qrGenrate };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// const qrUrl = `http://localhost:3000/event-pass/${token}`; // your frontend link
-  // const qrCodeImage = await QRCode.toDataURL(qrUrl);
