@@ -10,8 +10,7 @@ import {
 } from "react-bootstrap";
 import SideBar from "../../component/SideBar";
 import axios from "axios";
-import QrReader from 'react-qr-reader';
-import jwt_decode from 'jwt-decode';
+
 
 const EventManage = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
