@@ -8,20 +8,13 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-async function sendEmail(email, subject, html, qrImage) {
+// No need to attach QR image now, just send the HTML
+async function sendEmail(email, subject, html) {
   const mailOptions = {
     from: "miteshpradhan97@gmail.com",
     to: email,
     subject: subject,
-    html: html,
-    attachments: [
-      {
-        filename: 'qrcode.png',
-        content: qrImage.split("base64,")[1], // ensure qrImage is passed
-        encoding: 'base64',
-        cid: 'qrcode_cid'
-      }
-    ]
+    html: html
   };
 
   try {
@@ -34,49 +27,53 @@ async function sendEmail(email, subject, html, qrImage) {
   }
 }
 
+// Updated: no attachment logic needed now
 function sendEmailForUserCreation(
-    email,
-    studentName,
-    eventName,
-    eventDescription,
-    venue,
-    date,
-    qrImage
-  ) {
-    const subject = `Your QR Code for ${eventName}`;
-    const formattedDate = new Date(date).toLocaleString("en-US", {
-      dateStyle: "long",
-      timeStyle: "short",
-    });
-  
+  email,
+  studentName,
+  eventName,
+  eventDescription,
+  venue,
+  date,
+  qrImageUrl // Now this is a Cloudinary URL
+) {
+  const subject = `Your QR Code for ${eventName}`;
+  const formattedDate = new Date(date).toLocaleString("en-US", {
+    dateStyle: "long",
+    timeStyle: "short",
+  });
 
-    console.log(qrImage, "img");
-  
-    
-    const html = `
-      <div style="font-family: Arial, sans-serif; font-size: 14px; color: #333;">
-        <p>Hello <b>${studentName}</b>,</p>
-        <p>You have registered for:</p>
-        <ul>
-          <li><strong>Event:</strong> ${eventName}</li>
-          <li><strong>Description:</strong> ${eventDescription}</li>
-          <li><strong>Venue:</strong> ${venue}</li>
-          <li><strong>Date & Time:</strong> ${formattedDate}</li>
-        </ul>
-        <p>Scan the QR code below to access your event pass:</p>
-       <img src="cid:qrcode_cid" alt="QR Code" style="width:200px; height:auto;" />
+  const html = `
+    <div style="font-family: Arial, sans-serif; font-size: 14px; color: #333;">
+      <p>Hello <b>${studentName}</b>,</p>
+      <p>You have registered for:</p>
+      <ul>
+        <li><strong>Event:</strong> ${eventName}</li>
+        <li><strong>Description:</strong> ${eventDescription}</li>
+        <li><strong>Venue:</strong> ${venue}</li>
+        <li><strong>Date & Time:</strong> ${formattedDate}</li>
+      </ul>
 
-        <p>If you can't scan the QR code, open this link: 
-          <a href="${process.env.FRONTEND_URL || 'http://localhost:3000'}/event-pass" target="_blank">
-            Event Pass Link
-          </a>
-        </p>
-        <hr />
-        <p style="font-size: 12px; color: gray;">This pass is valid for 1 hour. Do not share this email.</p>
+      <p style="text-align: center;">The below QR code is your event pass,Please download it for future:</p>
+
+      <div style="text-align: center;">
+        <img src="${qrImageUrl}" alt="QR Code" style="width:200px; height:auto;" />
+        <br />
+        <a 
+          href="${qrImageUrl}" 
+          target="_blank"
+          download="qr-code-${studentName}.png"
+          style="display:inline-block; margin-top:10px; text-decoration:none; background-color:#007bff; color:white; padding:8px 16px; border-radius:4px;"
+        >
+          View or Download QR Code
+        </a>
       </div>
-    `;
-  
-    return sendEmail(email, subject, html, qrImage);
-  }
+      <hr />
+      <p style="font-size: 12px; color: gray;">This pass is valid till the event. Do not share this email.</p>
+    </div>
+  `;
 
-export {sendEmailForUserCreation} ;
+  return sendEmail(email, subject, html);
+}
+
+export { sendEmailForUserCreation };
