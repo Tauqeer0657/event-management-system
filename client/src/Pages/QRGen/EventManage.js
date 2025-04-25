@@ -75,7 +75,7 @@ const EventManage = () => {
 
   const handleGenerate = async () => {
     try {
-      const res = await axios.post("/api/v1/qr/qrGenrate/", formData);
+      const res = await axios.post("/api/v1/qr/generateQr/", formData);
       if (res.status === 200) {
         setSuccessMessage("QR Code generated successfully!");
         setTimeout(() => setSuccessMessage(""), 3000);
@@ -165,7 +165,7 @@ const EventManage = () => {
 
                   <Col xs={12} sm={6} className="mb-3">
                     <Form.Group controlId="studentId">
-                      <Form.Label style={labelStyle}>Students</Form.Label>
+                      <Form.Label style={labelStyle}>Student</Form.Label>
                       <Form.Select
                         value={formData.student_id}
                         onChange={(e) =>
@@ -195,7 +195,7 @@ const EventManage = () => {
                       style={{ fontSize: "12px", padding: "4px 12px" }}
                       disabled={!formData.student_id || !formData.event_id}
                     >
-                      Generate
+                      Generate Qr Code
                     </Button>
                   </Col>
                 </Row>

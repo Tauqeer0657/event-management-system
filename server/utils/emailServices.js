@@ -27,15 +27,14 @@ async function sendEmail(email, subject, html) {
   }
 }
 
-// Updated: no attachment logic needed now
-function sendEmailForUserCreation(
+function sendEmailWithQrCode(
   email,
   studentName,
   eventName,
   eventDescription,
   venue,
   date,
-  qrImageUrl // Now this is a Cloudinary URL
+  qrImageUrl 
 ) {
   const subject = `Your QR Code for ${eventName}`;
   const formattedDate = new Date(date).toLocaleString("en-US", {
@@ -54,7 +53,7 @@ function sendEmailForUserCreation(
         <li><strong>Date & Time:</strong> ${formattedDate}</li>
       </ul>
 
-      <p style="text-align: center;">The below QR code is your event pass,Please download it for future:</p>
+      <p style="text-align: center;">The below QR code is your event pass, Please download it for future.</p>
 
       <div style="text-align: center;">
         <img src="${qrImageUrl}" alt="QR Code" style="width:200px; height:auto;" />
@@ -76,4 +75,4 @@ function sendEmailForUserCreation(
   return sendEmail(email, subject, html);
 }
 
-export { sendEmailForUserCreation };
+export { sendEmailWithQrCode };

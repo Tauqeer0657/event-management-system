@@ -79,7 +79,7 @@ export default function Login() {
 
 
         // Navigate to dashboard or home
-        navigate("/qrgenrate"); // Change this to your actual route
+        navigate("/qrGenerate"); // Change this to your actual route
       } else {
         setError("Invalid email or password");
       }

@@ -18,8 +18,8 @@ export const menuItems = [
         path: "",
         icon: <ApartmentIcon sx={{ fontSize: "20px" }} />, 
         submenu: [
-          { text: "QR-Genrate", path: "/qrgenrate", icon: <CommuteIcon sx={{ fontSize: "18px" }} /> },
-          { text: "QR-Scan", path: "/qrshow", icon: <CommuteIcon sx={{ fontSize: "18px" }} /> },
+          { text: "QR-Generate", path: "/qrGenerate", icon: <CommuteIcon sx={{ fontSize: "18px" }} /> },
+          { text: "QR-Scan", path: "/qrShow", icon: <CommuteIcon sx={{ fontSize: "18px" }} /> },
          
         ],
       },
