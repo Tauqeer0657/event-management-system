@@ -3,7 +3,7 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { getSqlRequest, sql } from "../db/connection.js";
 import jwt from 'jsonwebtoken';
-import { sendEmailForUserCreation } from "../utils/emailServices.js"; 
+import { sendEmailForUserCreation } from "../utils/emailServices.js";
 import QRCode from "qrcode";
 
 const qrGenrate = asyncHandler(async (req, res) => {
@@ -68,7 +68,7 @@ const qrGenrate = asyncHandler(async (req, res) => {
   const token = jwt.sign(payload, process.env.SECRET_KEY);
 
   const qrCodeImage = await QRCode.toDataURL(token, {
-    width: 400,
+    width: 500,
     errorCorrectionLevel: 'L'
   });
 

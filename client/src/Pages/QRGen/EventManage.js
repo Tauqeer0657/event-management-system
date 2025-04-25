@@ -11,6 +11,7 @@ import {
 import SideBar from "../../component/SideBar";
 import axios from "axios";
 
+
 const EventManage = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const sidebarWidth = isSidebarOpen ? 200 : 0;
@@ -24,7 +25,7 @@ const EventManage = () => {
   });
 
 
-console.log(formData);
+
 
   
   const [loading, setLoading] = useState(true);
@@ -86,6 +87,9 @@ console.log(formData);
       alert("An error occurred while generating the QR Code.");
     }
   };
+
+
+  
 
   return (
     <Container
@@ -199,6 +203,12 @@ console.log(formData);
             </>
           )}
         </div>
+      </div>
+
+
+
+      <div>
+
       </div>
     </Container>
   );

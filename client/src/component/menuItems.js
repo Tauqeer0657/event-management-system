@@ -18,11 +18,12 @@ export const menuItems = [
     path: "",
     submenu: [
       {
-        text: "TMS",
+        text: "Event",
         path: "",
         icon: <ApartmentIcon sx={{ fontSize: "20px" }} />, 
         submenu: [
           { text: "QR-Genrate", path: "/qrgenrate", icon: <CommuteIcon sx={{ fontSize: "18px" }} /> },
+          { text: "QR-Scan", path: "/qrshow", icon: <CommuteIcon sx={{ fontSize: "18px" }} /> },
          
         ],
       },
