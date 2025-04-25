@@ -1,70 +1,3 @@
-// import { ApiError } from "../utils/ApiError.js";
-// import { ApiResponse } from "../utils/ApiResponse.js";
-// import { asyncHandler } from "../utils/asyncHandler.js";
-// import { getSqlRequest, sql } from "../db/connection.js";
-// import jwt from 'jsonwebtoken';
-
-
-// const qrGenrate = asyncHandler(async (req, res) => {
-//   const { student_id, event_id } = req.body;
-
-//   // Validate if student_id and event_id are provided
-//   if (!student_id || !event_id) {
-//     throw new ApiError(400, "student_id and event_id are required");
-//   }
-
-//   const request = getSqlRequest();
-
-//   // Add inputs to the SQL request
-//   request.input("student_id", sql.NVarChar, student_id);
-//   request.input("event_id", sql.NVarChar, event_id);
-
-//   console.log("Received Data:", { student_id, event_id });
-
-//   // SQL query to match the student and event
-//   const query = `
-//     SELECT 
-//       s.student_id, 
-//       s.fullName AS student_name, 
-//       s.email AS student_email,
-//       e.event_id, 
-//       e.event_name, 
-//       e.description AS event_description, 
-//       e.event_date AS event_time, 
-//       e.location AS event_venue
-//     FROM 
-//       tb_student s
-//     JOIN 
-//       tb_event e ON e.event_id = @event_id
-//     WHERE 
-//       s.student_id = @student_id
-//   `;
-
-//   const result = await request.query(query);
-
-  
-
-//   // Check if a match was found
-//   if (result.recordset.length === 0) {
-//     throw new ApiError(404, "No matching student or event found");
-//   }
-
-//   const studentEventDetails = result.recordset[0];
-
-//   // Send response with the matched data
-//   return res.status(200).json(
-//     new ApiResponse(200, studentEventDetails, "QR code data prepared")
-//   );
-// });
-
-
-
-// export { qrGenrate };
-
-
-
-
-
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
@@ -134,22 +67,12 @@ const qrGenrate = asyncHandler(async (req, res) => {
   // Generate token
   const token = jwt.sign(payload, process.env.SECRET_KEY);
 
-  // Create QR code from URL that includes token
-  // const qrUrl = `http://localhost:3000/event-pass/${token}`; // your frontend link
-  // const qrCodeImage = await QRCode.toDataURL(qrUrl);
   const qrCodeImage = await QRCode.toDataURL(token, {
-    width: 200,
-    errorCorrectionLevel: 'H'
+    width: 400,
+    errorCorrectionLevel: 'L'
   });
 
-
-  console.log(qrCodeImage);
-  
-
-
-  
-
-  // // Send email with event details and token
+ // Send email with event details and token
   await sendEmailForUserCreation(
     student_email,
     student_name,
@@ -161,19 +84,8 @@ const qrGenrate = asyncHandler(async (req, res) => {
   );
 
   return res.status(200).json(
-    new ApiResponse(200, { ...payload, token }, "QR code data prepared and email sent")
+    new ApiResponse(200, { ...payload, token }, "QR code generated and sent on an email")
   );
 });
 
 export { qrGenrate };
-
-
-
-
-
-
-
-
-
-
-
