@@ -104,6 +104,181 @@
 
 
 
+// import React, { useState, useRef, useCallback } from 'react';
+// import {
+//   Container,
+//   Card,
+//   CardContent,
+//   Grid,
+//   TextField,
+//   Button,
+//   Typography,
+// } from '@mui/material';
+// import { styled } from '@mui/system';
+
+// import QRCode from 'qrcode';
+// import {QrReader} from 'react-qr-reader';
+// import SideBar from "../../component/SideBar";
+
+
+// // ---------- styled helpers ----------
+// const PREFIX = 'QrDemo';
+// const classes = {
+//   container: `${PREFIX}-container`,
+//   header: `${PREFIX}-header`,
+//   button: `${PREFIX}-button`,
+// };
+
+// const Root = styled(Container)(({ theme }) => ({
+//   [`&.${classes.container}`]: {
+//     marginTop: theme.spacing(10),
+    
+//   },
+//   [`& .${classes.header}`]: {
+//     display: 'flex',
+//     justifyContent: 'center',
+   
+//     alignItems: 'center',
+//     background: 'orange',
+//     // color: theme.palette.common.white,
+//     padding: theme.spacing(2.5),
+//     borderRadius: theme.shape.borderRadius,
+//     marginBottom: theme.spacing(2),
+//   },
+//   [`& .${classes.button}`]: {
+//     marginTop: theme.spacing(1),
+//     marginBottom: theme.spacing(2.5),
+//   },
+// }));
+
+// // ---------- component ----------
+// export default function QRScanner() {
+//   const [text, setText] = useState('');
+//   const [imageUrl, setImageUrl] = useState('');
+//   const [scanResultFile, setScanResultFile] = useState('');
+//   const [scanResultWebCam, setScanResultWebCam] = useState('');
+//   const qrRef = useRef(null);
+
+//     const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+//   const sidebarWidth = isSidebarOpen ? 200 : 0;
+//   const rightSidebarWidth = 250;
+
+//   const generateQrCode = useCallback(async () => {
+//     if (!text) return;
+//     try {
+//       const url = await QRCode.toDataURL(text);
+//       setImageUrl(url);
+//     } catch (err) {
+//       console.error('QR generation failed', err);
+//     }
+//   }, [text]);
+
+//   // ---- file scan ----
+//   const onScanFile = () => qrRef.current?.openImageDialog?.();
+//   const handleScanFile = (result) => result && setScanResultFile(result);
+
+//   // ---- webcam scan ----
+//   const handleScanWebCam = (result) => {
+//     if (result) {
+//       setScanResultWebCam(result);
+//       // stop scanning once we have data
+//       // eslint‑disable‑next‑line no-unused-expressions
+//       qrWebcamRef.current?.pausePreview?.();
+//     }
+//   };
+//   const qrWebcamRef = useRef(null);
+
+//   return (
+//     <Root className={classes.container} >
+
+//        {isSidebarOpen && (
+//          <SideBar key="sidebar" sx={{ width: sidebarWidth, flexShrink: 0 }} />
+//        )}
+//       <Card elevation={3} style={{ height:"500px", marginLeft:"130px"}}>
+//         <Typography variant="h5" className={classes.header}>
+//           Generate, Download &amp; Scan QR Codes
+//         </Typography>
+
+//         <CardContent>
+//           <Grid container spacing={3}>
+//             {/* ---------- QR generator ---------- */}
+//             <Grid item xs={12} md={4}>
+//               <TextField
+//                 fullWidth
+//                 label="Enter text here"
+//                 value={text}
+//                 onChange={(e) => setText(e.target.value)}
+//               />
+//               <Button
+//                 fullWidth
+//                 variant="contained"
+//                 className={classes.button}
+//                 onClick={generateQrCode}
+//               >
+//                 Generate
+//               </Button>
+//               {imageUrl && (
+//                 <a href={imageUrl} download="qrcode.png">
+//                   <img src={imageUrl} alt="Generated QR" width="100%" />
+//                 </a>
+//               )}
+//             </Grid>
+
+//             {/* ---------- Scan from file ---------- */}
+//             <Grid item xs={12} md={4}>
+//               <Button
+//                 fullWidth
+//                 variant="outlined"
+//                 color="secondary"
+//                 className={classes.button}
+//                 onClick={onScanFile}
+//               >
+//                 Scan from file
+//               </Button>
+
+//               <QrReader
+//                 legacyMode
+//                 ref={qrRef}
+//                 delay={300}
+//                 onError={console.error}
+//                 onScan={handleScanFile}
+//                 style={{ width: '100%' }}
+//               />
+//               {scanResultFile && (
+//                 <Typography variant="subtitle2" sx={{ mt: 2 }}>
+//                   Result: {scanResultFile}
+//                 </Typography>
+//               )}
+//             </Grid>
+
+//             {/* ---------- Scan via webcam ---------- */}
+//             <Grid item xs={12} md={4}>
+//               <Typography variant="h6" gutterBottom>
+//                 Scan via webcam
+//               </Typography>
+
+//               <QrReader
+//                 ref={qrWebcamRef}
+//                 delay={300}
+//                 onError={console.error}
+//                 onScan={handleScanWebCam}
+//                 style={{ width: '100%' }}
+//               />
+//               {scanResultWebCam && (
+//                 <Typography variant="subtitle2" sx={{ mt: 2 }}>
+//                   Result: {scanResultWebCam}
+//                 </Typography>
+//               )}
+//             </Grid>
+//           </Grid>
+//         </CardContent>
+//       </Card>
+//     </Root>
+//   );
+// }
+
+
+
 import React, { useState, useRef, useCallback } from 'react';
 import {
   Container,
@@ -114,11 +289,10 @@ import {
   Button,
   Typography,
 } from '@mui/material';
-import { height, styled } from '@mui/system';
-
+import { styled } from '@mui/system';
 import QRCode from 'qrcode';
-import {QrReader} from 'react-qr-reader';
-import SideBar from "../../component/SideBar";
+import QrReader from 'react-qr-reader'; // Note: lowercase 'r'
+import SideBar from '../../component/SideBar';
 
 // ---------- styled helpers ----------
 const PREFIX = 'QrDemo';
@@ -131,15 +305,12 @@ const classes = {
 const Root = styled(Container)(({ theme }) => ({
   [`&.${classes.container}`]: {
     marginTop: theme.spacing(10),
-    
   },
   [`& .${classes.header}`]: {
     display: 'flex',
     justifyContent: 'center',
-   
     alignItems: 'center',
     background: 'orange',
-    // color: theme.palette.common.white,
     padding: theme.spacing(2.5),
     borderRadius: theme.shape.borderRadius,
     marginBottom: theme.spacing(2),
@@ -150,17 +321,15 @@ const Root = styled(Container)(({ theme }) => ({
   },
 }));
 
-// ---------- component ----------
 export default function QRScanner() {
   const [text, setText] = useState('');
   const [imageUrl, setImageUrl] = useState('');
   const [scanResultFile, setScanResultFile] = useState('');
   const [scanResultWebCam, setScanResultWebCam] = useState('');
   const qrRef = useRef(null);
-
-    const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const qrWebcamRef = useRef(null);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const sidebarWidth = isSidebarOpen ? 200 : 0;
-  const rightSidebarWidth = 250;
 
   const generateQrCode = useCallback(async () => {
     if (!text) return;
@@ -172,35 +341,33 @@ export default function QRScanner() {
     }
   }, [text]);
 
-  // ---- file scan ----
   const onScanFile = () => qrRef.current?.openImageDialog?.();
-  const handleScanFile = (result) => result && setScanResultFile(result);
 
-  // ---- webcam scan ----
+  const handleScanFile = (result) => {
+    if (result) {
+      setScanResultFile(result);
+    }
+  };
+
   const handleScanWebCam = (result) => {
     if (result) {
       setScanResultWebCam(result);
-      // stop scanning once we have data
-      // eslint‑disable‑next‑line no-unused-expressions
-      qrWebcamRef.current?.pausePreview?.();
     }
   };
-  const qrWebcamRef = useRef(null);
 
   return (
-    <Root className={classes.container} >
-
-       {isSidebarOpen && (
-         <SideBar key="sidebar" sx={{ width: sidebarWidth, flexShrink: 0 }} />
-       )}
-      <Card elevation={3} style={{ height:"500px", marginLeft:"130px"}}>
+    <Root className={classes.container}>
+      {isSidebarOpen && (
+        <SideBar key="sidebar" sx={{ width: sidebarWidth, flexShrink: 0 }} />
+      )}
+      <Card elevation={3} style={{ height: 'auto', marginLeft: '130px' }}>
         <Typography variant="h5" className={classes.header}>
           Generate, Download &amp; Scan QR Codes
         </Typography>
 
         <CardContent>
           <Grid container spacing={3}>
-            {/* ---------- QR generator ---------- */}
+            {/* QR Generator */}
             <Grid item xs={12} md={4}>
               <TextField
                 fullWidth
@@ -223,7 +390,7 @@ export default function QRScanner() {
               )}
             </Grid>
 
-            {/* ---------- Scan from file ---------- */}
+            {/* Scan from File */}
             <Grid item xs={12} md={4}>
               <Button
                 fullWidth
@@ -234,10 +401,9 @@ export default function QRScanner() {
               >
                 Scan from file
               </Button>
-
               <QrReader
-                legacyMode
                 ref={qrRef}
+                legacyMode
                 delay={300}
                 onError={console.error}
                 onScan={handleScanFile}
@@ -250,14 +416,12 @@ export default function QRScanner() {
               )}
             </Grid>
 
-            {/* ---------- Scan via webcam ---------- */}
+            {/* Scan via Webcam */}
             <Grid item xs={12} md={4}>
               <Typography variant="h6" gutterBottom>
                 Scan via webcam
               </Typography>
-
               <QrReader
-                ref={qrWebcamRef}
                 delay={300}
                 onError={console.error}
                 onScan={handleScanWebCam}
