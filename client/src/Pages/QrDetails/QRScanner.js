@@ -13,6 +13,14 @@ import { styled } from '@mui/system';
 import QrReader from 'react-qr-reader'; // Note: lowercase 'r'
 import SideBar from '../../component/SideBar';
 import { jwtDecode } from "jwt-decode";
+import verify from "../../assets/logo/user-check.jpg";
+import moment from 'moment';
+
+
+
+
+
+
 
 // ---------- styled helpers ----------
 const PREFIX = 'QrDemo';
@@ -53,6 +61,16 @@ export default function QRScanner() {
   const [decodedToken, setDecodedToken] = useState(null);
 
   console.log(decodedToken);
+
+
+  const currentDateTime = moment();
+
+  
+  // const isToday = moment(decodedToken?.event_time).isSame(currentDateTime, 'day');
+  // const isExpired = moment(decodedToken?.event_time).isBefore(currentDateTime);
+
+
+
 
 
 
@@ -129,32 +147,54 @@ export default function QRScanner() {
 
 
             <div style={{ marginLeft: "30px", padding: "10px" }}>
+
               {decodedToken && (
                 <div style={{ marginTop: '16px' }}>
                   <Typography variant="subtitle1" gutterBottom>Student Details</Typography>
                   <Typography>Name: {decodedToken.student_name}</Typography>
                   <Typography>Email: {decodedToken.student_email}</Typography>
                   <Typography>Event: {decodedToken.event_name}</Typography>
-                  <Typography>Time: {decodedToken.event_time}</Typography>
+                  <Typography>Time: {moment(decodedToken.event_time).format('MMMM Do YYYY, h:mm:ss a')}</Typography>
                 </div>
               )}
 
-              <div style={{ display: 'flex', alignItems: 'center', marginTop: '10px' }}>
-                <img
-                  src="/cba698c8-f5c8-48d9-b03d-4503e4c9f523.png" // adjust path if needed
-                  alt="Verified User"
-                  style={{ width: '40px', height: '40px', marginRight: '10px' }}
-                />
-                <Typography variant="body1" color="green">
-                  Verified User
-                </Typography>
-              </div>
+              {decodedToken ? (
+                <>
+                  <img style={{ height: "80px", margin: "20px" }} src={verify} alt="User Profile" />
+                  <span>Verified</span>
+                </>
+              ) : (
+                <p>No token found</p>
+              )}
+
+
+{/* 
+{isToday ? (
+  decodedToken ? (
+    <div style={{ marginTop: '16px' }}>
+      <Typography variant="subtitle1" gutterBottom>Student Details</Typography>
+      <Typography>Name: {decodedToken.student_name}</Typography>
+      <Typography>Email: {decodedToken.student_email}</Typography>
+      <Typography>Event: {decodedToken.event_name}</Typography>
+      <Typography>Time: {moment(decodedToken.event_time).format('MMMM Do YYYY, h:mm:ss a')}</Typography>
+
+    
+      <img style={{ height: "80px", margin: "20px" }} src={verify} alt="User Profile" />
+      <span>Verified</span>
+    </div>
+  ) : (
+    <p>No token found</p>
+  )
+) : (
+  <Typography color="secondary">The event is not today.</Typography>
+)} */}
 
 
 
+
+           
 
             </div>
-
 
 
           </Grid>
