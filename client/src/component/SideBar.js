@@ -16,7 +16,7 @@ import ListItemText from "@mui/material/ListItemText";
 import Header from "./Header";
 import { useNavigate, useLocation } from "react-router-dom";
 import { menuItems } from "./menuItems"; // Import the menuItems
-import logo from "../assets/logo/OWM_Final.png";
+import logo from "../assets/logo/logo.jpg";
 
 const drawerWidth = 200;
 
