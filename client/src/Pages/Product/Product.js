@@ -18,45 +18,46 @@ import {
 import { useNavigate } from "react-router-dom";
 import { useCart } from "../../context/CartContext";  // Import the context
 
-// Party Event Data
-const partyEventData = [
+// Event Data
+const eventData = [
   {
     id: 1,
-    title: "Goa Beach Bash",
-    description: "Party all night with DJs, bonfires, and beachside fun.",
-    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQbYxAovKgIPX-P5pRu4uckR09DNM2tNKSoFQ&s",
+    title: "AI & Robotics Symposium",
+    description: "Explore the future of Artificial Intelligence and Robotics with leading researchers.",
+    image: "https://worldkings.org/Userfiles/Upload/images/sara-1.png",
     date: "2025-06-21",
-    location: "Baga Beach, Goa",
-    price: "₹7,000",
+    location: "King Abdullah University of Science and Technology (KAUST), Thuwal",
+    price: "₹1500",
   },
   {
     id: 2,
-    title: "Mumbai Neon Night",
-    description: "Glow in the dark party with top electronic music artists.",
-    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRqCjWbqZXiT-SY1zhn8K37Ni0T5COQi23mBQ&s",
+    title: "Cultural Diversity Festival",
+    description: "Celebrate Saudi Arabia's diverse cultural heritage with music, food, and art.",
+    image: "https://www.arabnews.com/sites/default/files/styles/n_670_395/public/2018/12/23/1408586-2053602578.jpg?itok=El7cY-FF",
     date: "2025-07-15",
-    location: "Worli, Mumbai",
-    price: "₹5,500",
+    location: "King Saud University, Riyadh",
+    price: "₹1000",
   },
   {
     id: 3,
-    title: "Jaipur Palace Masquerade",
-    description: "Royal-themed masquerade night in a stunning heritage setting.",
-    image: "https://i.pinimg.com/736x/36/eb/dd/36ebdd42187b02cdbfa093ea3a2cdc4e.jpg",
+    title: "Entrepreneurship Bootcamp",
+    description: "Hands-on training for aspiring student entrepreneurs and startups.",
+    image: "https://srmap.edu.in/wp-content/uploads/2024/04/IMG_7592-1024x683.jpg",
     date: "2025-08-12",
-    location: "City Palace, Jaipur",
-    price: "₹6,200",
+    location: "Prince Sultan University, Riyadh",
+    price: "SAR 500",
   },
   {
     id: 4,
-    title: "Bangalore Rooftop Sundowner",
-    description: "Chill with great music and cocktails at a rooftop venue.",
-    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEvTJUhigLugmQYNg5OFjMRso9VxoXEn7jZw&s",
+    title: "Green Energy Innovation Forum",
+    description: "Discuss sustainable energy innovations and environmental research projects.",
+    image: "https://miro.medium.com/v2/resize:fit:640/format:webp/0*upX8NtE2BAMxMu-5",
     date: "2025-09-03",
-    location: "Indiranagar, Bangalore",
-    price: "₹1,500",
+    location: "King Fahd University of Petroleum and Minerals (KFUPM), Dhahran",
+    price: "₹800",
   },
 ];
+
 
 // Styles
 const headerStyle = {
@@ -127,7 +128,7 @@ const Product = () => {
 
         {/* MUI Event Cards */}
         <Grid container spacing={3} sx={{ mt: 2 }}>
-          {partyEventData.map((event) => (
+          {eventData.map((event) => (
             <Grid item xs={12} sm={6} md={3} key={event.id}>
               <Card sx={{ height: "100%", display: "flex", flexDirection: "column" }}>
                 <CardMedia
@@ -147,7 +148,7 @@ const Product = () => {
                     <Typography variant="body2">
                       📍 <strong>Location:</strong> {event.location}
                     </Typography>
-                    <Typography variant="body2">
+                    <Typography variant="body2" mt={1}>
                       📅 <strong>Date:</strong> {event.date}
                     </Typography>
                   </Box>
