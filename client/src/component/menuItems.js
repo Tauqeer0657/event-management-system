@@ -1,43 +1,24 @@
-
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import LayersIcon from "@mui/icons-material/Layers";
-
-import CommuteIcon from "@mui/icons-material/Commute";
-import ApartmentIcon from "@mui/icons-material/Apartment";
-
+import QrCode2Icon from "@mui/icons-material/QrCode2";      // QR-Generate
+import QrCodeScannerIcon from "@mui/icons-material/QrCodeScanner"; // QR-Scan
+import InventoryIcon from "@mui/icons-material/Inventory";  // Product
+import EventIcon from "@mui/icons-material/Event";          // Event
 
 export const menuItems = [
- 
   {
     text: "Menu",
-    icon: <LayersIcon sx={{ fontSize: "20px" }} />, 
+    icon: <LayersIcon sx={{ fontSize: "20px" }} />,
     path: "",
     submenu: [
       {
         text: "Event",
         path: "",
-        icon: <ApartmentIcon sx={{ fontSize: "20px" }} />, 
+        icon: <EventIcon sx={{ fontSize: "20px" }} />,
         submenu: [
-          { text: "QR-Generate", path: "/qrGenerate", icon: <CommuteIcon sx={{ fontSize: "18px" }} /> },
-          { text: "QR-Scan", path: "/qrShow", icon: <CommuteIcon sx={{ fontSize: "18px" }} /> },
-         
-        ],
-      },
-    ],
-  },
-  {
-    text: "Product",
-    icon: <LayersIcon sx={{ fontSize: "20px" }} />, 
-    path: "",
-    submenu: [
-      {
-        text: "Events",
-        path: "",
-        icon: <ApartmentIcon sx={{ fontSize: "20px" }} />, 
-        submenu: [
-          { text: "Product", path: "/event", icon: <CommuteIcon sx={{ fontSize: "18px" }} /> },
-        
-         
+          { text: "QR-Generate", path: "/qrGenerate", icon: <QrCode2Icon sx={{ fontSize: "18px" }} /> },
+          { text: "QR-Scan", path: "/qrShow", icon: <QrCodeScannerIcon sx={{ fontSize: "18px" }} /> },
+          { text: "Event-Pass", path: "/event", icon: <InventoryIcon sx={{ fontSize: "18px" }} /> },
         ],
       },
     ],
