@@ -48,12 +48,12 @@ app.post("/api/create-checkout-session", async (req, res) => {
         
             
             price_data: {
-                currency: "inr",
+                currency: "SAR",
                 product_data: {
                     name: product.title,
                 },
                 unit_amount:parseInt(
-                    product.price.toString().replace(/[₹,]/g, "")
+                    product.price.toString().replace(/[SAR,]/g, "")
                 ) * 100, 
             },
             quantity: product.qnty,

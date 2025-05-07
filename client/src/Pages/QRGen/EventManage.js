@@ -16,7 +16,7 @@ const EventManage = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const sidebarWidth = isSidebarOpen ? 200 : 0;
   const rightSidebarWidth = 250;
-
+  const [qrGenerating, setQrGenerating] = useState(false);
   const [studentData, setStudentData] = useState([]);
   const [eventData, setEventData] = useState([]);
   const [formData, setFormData] = useState({
@@ -27,7 +27,7 @@ const EventManage = () => {
 
 
 
-  
+
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
@@ -74,10 +74,15 @@ const EventManage = () => {
   }, []);
 
   const handleGenerate = async () => {
+    setQrGenerating(true);
     try {
       const res = await axios.post("/api/v1/qr/generateQr/", formData);
       if (res.status === 200) {
         setSuccessMessage("QR Code generated successfully!");
+        setFormData({
+          student_id: "",
+          event_id: "",
+        })
         setTimeout(() => setSuccessMessage(""), 3000);
       } else {
         alert("Failed to generate QR Code. Please try again.");
@@ -85,11 +90,13 @@ const EventManage = () => {
     } catch (error) {
       console.error("Error generating QR Code:", error);
       alert("An error occurred while generating the QR Code.");
+    } finally {
+      setQrGenerating(false);
     }
   };
 
 
-  
+
 
   return (
     <Container
@@ -189,14 +196,31 @@ const EventManage = () => {
 
                 <Row className="mt-2">
                   <Col className="d-flex justify-content-end">
-                    <Button
+                    {/* <Button
                       variant="primary"
                       onClick={handleGenerate}
                       style={{ fontSize: "12px", padding: "4px 12px" }}
                       disabled={!formData.student_id || !formData.event_id}
                     >
                       Generate Qr Code
+                    </Button> */}
+
+
+                    <Button
+                      variant="primary"
+                      onClick={handleGenerate}
+                      style={{ fontSize: "12px", padding: "4px 12px" }}
+                      disabled={!formData.student_id || !formData.event_id || qrGenerating}
+                    >
+                      {qrGenerating ? (
+                        <>
+                          <Spinner animation="border" size="sm" /> Generating...
+                        </>
+                      ) : (
+                        "Generate Qr Code"
+                      )}
                     </Button>
+
                   </Col>
                 </Row>
               </Form>

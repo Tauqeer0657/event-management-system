@@ -3,7 +3,7 @@ import React from "react";
 import { styled } from "@mui/material/styles";
 import MuiAppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
-import logo from "../assets/logo/OWM_White.png";
+import logo from "../assets/logo/logo.jpg";
 
 // Define the drawer width
 const drawerWidth = 200;
@@ -32,7 +32,7 @@ export default function Header2() {
       <Toolbar
         style={{ justifyContent: "space-between", alignItems: "center" }}
       >
-        <img src={logo} alt="logo" height='66px' style={{ backgroundSize:"140px auto"}}/>
+        <img src={logo} alt="logo" height='50px' style={{ backgroundSize:"140px auto"}}/>
         <div style={{height:"40px", width:"40px" , background:"white", borderRadius:"50%"}}>
 
         </div>

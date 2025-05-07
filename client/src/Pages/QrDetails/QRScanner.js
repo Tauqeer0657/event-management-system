@@ -9,7 +9,7 @@ import {
   Button,
   Typography,
 } from '@mui/material';
-import { styled } from '@mui/system';
+import { color, styled } from '@mui/system';
 import QrReader from 'react-qr-reader'; // Note: lowercase 'r'
 import SideBar from '../../component/SideBar';
 import { jwtDecode } from "jwt-decode";
@@ -38,7 +38,8 @@ const Root = styled(Container)(({ theme }) => ({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    background: 'orange',
+    background: '#3b4566',
+    color:"white",
     padding: theme.spacing(2.5),
     borderRadius: theme.shape.borderRadius,
     marginBottom: theme.spacing(2),
@@ -96,7 +97,7 @@ export default function QRScanner() {
       {isSidebarOpen && (
         <SideBar key="sidebar" sx={{ width: sidebarWidth, flexShrink: 0 }} />
       )}
-      <Card elevation={3} style={{ height: 'auto', marginLeft: '130px' }}>
+      <Card elevation={3} style={{ height: 'auto', marginLeft: '130px',  }}>
         <Typography variant="h5" className={classes.header}>
           Event Management System
         </Typography>

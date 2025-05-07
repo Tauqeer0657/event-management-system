@@ -70,7 +70,7 @@ const CartDetails = () => {
     const total = () => {
         let price = 0;
         carts.forEach(item => {
-            const itemPrice = parseFloat(item.price.replace('₹', '').replace(',', '')); // Remove ₹ and commas, then convert to number
+            const itemPrice = parseFloat(item.price.replace('SAR', '').replace(',', '')); // Remove ₹ and commas, then convert to number
             price += itemPrice * item.qnty;
         });
         setPrice(price);
@@ -202,7 +202,7 @@ const CartDetails = () => {
                                                                 <Avatar src={item.image} alt={item.title} />
                                                             </TableCell>
                                                             <TableCell>{item.title}</TableCell>
-                                                            <TableCell>₹{item.price}</TableCell>
+                                                            <TableCell>{item.price}</TableCell>
                                                             <TableCell>
                                                                 <Box sx={{ display: 'flex', alignItems: 'center' }}>
                                                                     <IconButton
@@ -228,7 +228,7 @@ const CartDetails = () => {
                                                             <Typography variant="subtitle1">Items in Cart: <strong>{totalquantity}</strong></Typography>
                                                         </TableCell>
                                                         <TableCell align="right">
-                                                            <Typography variant="h6">Total: ₹{totalprice}</Typography>
+                                                            <Typography variant="h6">Total: SAR {totalprice}</Typography>
                                                             <Button
                                                                 variant="contained"
                                                                 color="success"

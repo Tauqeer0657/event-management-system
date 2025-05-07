@@ -27,7 +27,7 @@ const eventData = [
     image: "https://worldkings.org/Userfiles/Upload/images/sara-1.png",
     date: "2025-06-21",
     location: "King Abdullah University of Science and Technology (KAUST), Thuwal",
-    price: "₹1500",
+    price: "SAR 1500",
   },
   {
     id: 2,
@@ -36,7 +36,7 @@ const eventData = [
     image: "https://www.arabnews.com/sites/default/files/styles/n_670_395/public/2018/12/23/1408586-2053602578.jpg?itok=El7cY-FF",
     date: "2025-07-15",
     location: "King Saud University, Riyadh",
-    price: "₹1000",
+    price: "SAR 1000",
   },
   {
     id: 3,
@@ -54,7 +54,7 @@ const eventData = [
     image: "https://miro.medium.com/v2/resize:fit:640/format:webp/0*upX8NtE2BAMxMu-5",
     date: "2025-09-03",
     location: "King Fahd University of Petroleum and Minerals (KFUPM), Dhahran",
-    price: "₹800",
+    price: "SAR 800",
   },
 ];
 
