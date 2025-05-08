@@ -94,7 +94,7 @@ const CartDetails = () => {
         const stripe = await stripePromise
       
         const body = { products: carts };
-        const response = await fetch("/api/create-checkout-session", {
+        const response = await fetch("/api/v1/create-checkout-session", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(body),
