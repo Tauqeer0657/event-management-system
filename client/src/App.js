@@ -7,6 +7,8 @@ import EventManage from "./Pages/QRGen/EventManage";
 import QRScanner from "./Pages/QrDetails/QRScanner";
 import Product from "./Pages/Product/Product";
 import CartDetails from "./component/Cart";
+import Success from "./Pages/Success";
+import Cancel from "./Pages/Cancel";
 
 
 function App() {
@@ -19,6 +21,10 @@ function App() {
         <Route path="/qrShow" element={<QRScanner />}></Route>
         <Route path="/event" element={<Product />}></Route>
         <Route path="/cart" element={<CartDetails />}></Route>
+        <Route path="/success" element={<Success />}></Route>
+        <Route path="/cancel" element={<Cancel />}></Route>
+
+
 
 
 
